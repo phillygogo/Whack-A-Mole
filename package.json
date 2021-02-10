@@ -1,0 +1,36 @@
+{
+  "scripts": {
+    "watch": "NODE_ENV='development' webpack --mode=development --watch",
+    "start": "webpack-dev-server --open",
+    "build": "NODE_ENV='production' webpack --mode=production",
+    "lint": "yarn lint:js && yarn lint:style",
+    "lint:js": "eslint --ext .js,.vue src/",
+    "lint:style": "stylelint \"src/**/*.{scss,vue}\" --formatter verbose"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.0",
+    "babel-loader": "^8.1.0",
+    "css-loader": "^3.4.2",
+    "eslint": "6.8.0",
+    "eslint-config-airbnb-base": "14.1.0",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-vue": "^7.0.0-alpha.2",
+    "mini-css-extract-plugin": "^0.9.0",
+    "node-sass": "^4.13.1",
+    "postcss-loader": "^3.0.0",
+    "postcss-preset-env": "^6.7.0",
+    "sass-loader": "^8.0.2",
+    "stylelint": "^13.3.3",
+    "stylelint-config-standard": "^20.0.0",
+    "vue-loader": "^15.9.1",
+    "vue-template-compiler": "^2.6.11",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.11.0"
+  },
+  "dependencies": {
+    "vue": "^2.6.11",
+    "vue-router": "^3.3.4"
+  }
+}
