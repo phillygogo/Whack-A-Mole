@@ -50,6 +50,10 @@ export default {
         }
     },
     startGame() {
+        this.gameTime = 30;
+        this.score = 0;
+        this.gameOver = false;
+
         this.interval = setInterval(() => {
             if(this.gameTime == 0) {
                 this.gameOver = true;
