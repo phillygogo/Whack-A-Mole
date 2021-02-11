@@ -1,5 +1,13 @@
 <template>
     <div class="score-grid">
+        <div class="gameOver"
+            v-if="gameOver">
+            GAME OVER!!
+        </div>
+        <div class="timer"
+            v-if="gameTime >= 0">
+            {{gameTime}} Seconds Left!
+        </div>
         <div class="score">
             {{score}} Points
         </div>
@@ -9,7 +17,7 @@
 <script>
 export default {
     name: 'ScoreBoard',
-    props: ['score'],
+    props: ['score', 'gameTime', 'gameOver'],
 };
 </script>
 

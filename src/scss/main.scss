@@ -13,17 +13,18 @@
   flex-direction: column;
   justify-content: space-between;
   height: 100vh;
-  cursor: url("https://i.imgur.com/9CcmlnB.png"), auto;
+  cursor: url("https://i.imgur.com/9CcmlnB.png") 20 20, auto;
 }
 
 .container:active {
-  cursor: url("https://i.imgur.com/dDPydXh.png"), auto;
+  cursor: url("https://i.imgur.com/dDPydXh.png") 20 20, auto;
 }
 
 .score-grid {
   display:flex;
   align-self: center;
-  margin-top: 90px;
+  width: 20vw;
+  justify-content: space-evenly;
 }
 
 .score {

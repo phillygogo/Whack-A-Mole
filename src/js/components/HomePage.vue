@@ -5,6 +5,8 @@
   </div>
   <ScoreBoard 
     :score="this.score"
+    :gameTime="this.gameTime"
+    :gameOver="this.gameOver"
   />
   <div class="mole-grid">
     <Mole
@@ -32,7 +34,10 @@ export default {
    data() {
     return {
         score: 0,
+        gameTime: 30,
+        gameOver: false,
         luckyNumbers: [],
+        interval: null,
         moles: [{id: 0, showtime: false, hit: false}, {id: 1, showtime: false, hit: false}, {id: 2, showtime: false, hit: false}, {id: 3, showtime: false, hit: false},
         {id: 4, showtime: false, hit: false}, {id: 5, showtime: false, hit: false}, {id: 6, showtime: false, hit: false}, {id: 7, showtime: false, hit: false, hit: false}]
     };
@@ -45,9 +50,14 @@ export default {
         }
     },
     startGame() {
-        this.interval = setInterval(() =>
+        this.interval = setInterval(() => {
+            if(this.gameTime == 0) {
+                this.gameOver = true;
+                clearInterval(this.interval);
+            }
             this.runCycle()
-        , 1000);
+            this.gameTime = this.gameTime -1;
+        }, 1000);
     },
     runCycle() {
         //reset all this hits on the moles each game cycle
