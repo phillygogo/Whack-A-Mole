@@ -20,17 +20,17 @@ export default {
         }
     },
     methods: {
-    popup() {
-        this.$el.style.backgroundPosition = "0px " + (144 * this.stepNum) + "px";
-        this.stepTimeout = setTimeout(this.popup, 750/4);
-        
-        if(this.stepNum == 4) {
-            clearTimeout(this.stepTimeout);
-            this.$emit('im-done');
-        }
-        this.stepNum = (this.stepNum === 4) ? this.stepNum = 1 : this.stepNum + 1;
-    },
-  }
+        popup() {
+            this.$el.style.backgroundPosition = "0px " + (144 * this.stepNum) + "px";
+            this.stepTimeout = setTimeout(this.popup, 300);
+            
+            if(this.stepNum == 4) {
+                clearTimeout(this.stepTimeout);
+                this.$emit('im-done');
+            }
+            this.stepNum = (this.stepNum === 4) ? this.stepNum = 1 : this.stepNum + 1;
+        },
+    }
 };
 </script>
 

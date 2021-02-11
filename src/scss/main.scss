@@ -13,16 +13,17 @@
   flex-direction: column;
   justify-content: space-between;
   height: 100vh;
-  cursor: url("https://i.imgur.com/9CcmlnB.png") 40 60, auto;
+  cursor: url("https://i.imgur.com/9CcmlnB.png"), auto;
 }
 
 .container:active {
-  cursor: url("https://i.imgur.com/dDPydXh.png") 40 60, auto;
+  cursor: url("https://i.imgur.com/dDPydXh.png"), auto;
 }
 
 .score-grid {
   display:flex;
-  justify-content: space-between;
+  align-self: center;
+  margin-top: 90px;
 }
 
 .score {
@@ -32,8 +33,9 @@
 .start {
   background-color: Pink;
   align-self: flex-end;
-  height: 50px;
+  height: 100px;
   width: 200px;
+  margin-top: 30px;
   border-radius: 20%;
   text-align: center;
 }

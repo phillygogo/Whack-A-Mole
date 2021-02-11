@@ -1,20 +1,18 @@
 <template>
 <div class="container">
-  <div class="score-grid">
-    <div class="score">
-      20Points
-    </div>
-    <div class="start" @click="startGame()">
-      Start!
-    </div>
+  <div class="start" @click="startGame()">
+    Start!
   </div>
+  <ScoreBoard 
+    :score="this.score"
+  />
   <div class="mole-grid">
     <Mole
       v-for="mole in moles"
       :key="mole.id"
       :showtime="mole.showtime"
       @im-done="doneFunc(mole.id)"
-      v-on:click.native="hitOrMiss(mole.showtime)"
+      v-on:click.native="hitOrMiss(mole)"
     />
 
   </div>
@@ -23,38 +21,64 @@
 
 <script>
 import Mole from './Mole.vue';
+import ScoreBoard from './ScoreBoard.vue';
+
 export default {
   name: 'HomePage',
   components: {
-    Mole
+    Mole,
+    ScoreBoard,
   },
    data() {
     return {
-      start: false,
-      stepNum: 1,
-      stepTimeout: null,
-      moleInPlay: null,
-      poppingMole: 5,
-      moles: [{id: 0, showtime: false}, {id: 1, showtime: false}, {id: 2, showtime: false}, {id: 3, showtime: false}, {id: 4, showtime: false},
-      {id: 5, showtime: false}, {id: 6, showtime: false}, {id: 7, showtime: false}]
+        score: 0,
+        luckyNumbers: [],
+        moles: [{id: 0, showtime: false, hit: false}, {id: 1, showtime: false, hit: false}, {id: 2, showtime: false, hit: false}, {id: 3, showtime: false, hit: false},
+        {id: 4, showtime: false, hit: false}, {id: 5, showtime: false, hit: false}, {id: 6, showtime: false, hit: false}, {id: 7, showtime: false, hit: false, hit: false}]
     };
   },
   methods: {
-    hitOrMiss(poppingUp) {
-      console.log('hit me or miss : ' + poppingUp);
+    hitOrMiss(mole) {
+        if(mole.showtime && !mole.hit) {
+            mole.hit = true;
+            this.score = this.score +1;
+        }
     },
     startGame() {
-      this.interval = setInterval(() => 
-        this.runCycle()
-      , 1000);
+        this.interval = setInterval(() =>
+            this.runCycle()
+        , 1000);
     },
     runCycle() {
-      var theMole = Math.floor(Math.random() * Math.floor(8));
-      this.moles[theMole].showtime = true;
+        //reset all this hits on the moles each game cycle
+        this.moles.forEach((mole) => mole.hit = false);
+
+        //pick the mole to appear
+        var theMole = this.diceRoll();
+        this.moles[theMole].showtime = true;
+        
+        //roll the lucky roll
+        this.luckyNumbers = [this.diceRoll(),this.diceRoll()];
+
+        //Generate a lucky roll!
+        if(this.luckyNumbers.includes(theMole)) {
+            this.luckyRoll(theMole);
+        }
     },
     doneFunc(mole) {
-      this.moles[mole].showtime = false;
+        this.moles[mole].showtime = false;
     },
+    luckyRoll(theMole) {
+        //pick the second mole to appear
+        var doubleMole = this.diceRoll();
+
+        if (doubleMole !== theMole) {
+            this.moles[doubleMole].showtime = true;
+        }
+    },
+    diceRoll() {
+        return Math.floor(Math.random() * Math.floor(8));
+    }
   }
 };
 </script>
