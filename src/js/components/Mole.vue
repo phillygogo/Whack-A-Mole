@@ -15,7 +15,6 @@ export default {
     watch: { 
       	showtime: function(newVal, oldVal) { // watch it
             if(newVal) {
-                console.log('getgin  around?');
                 this.popup();
             }
         }
@@ -24,7 +23,7 @@ export default {
     popup() {
         this.$el.style.backgroundPosition = "0px " + (144 * this.stepNum) + "px";
         this.stepTimeout = setTimeout(this.popup, 750/4);
-
+        
         if(this.stepNum == 4) {
             clearTimeout(this.stepTimeout);
             this.$emit('im-done');

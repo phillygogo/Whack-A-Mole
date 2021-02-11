@@ -14,6 +14,7 @@
       :key="mole.id"
       :showtime="mole.showtime"
       @im-done="doneFunc(mole.id)"
+      v-on:click.native="hitOrMiss(mole.showtime)"
     />
 
   </div>
@@ -39,6 +40,9 @@ export default {
     };
   },
   methods: {
+    hitOrMiss(poppingUp) {
+      console.log('hit me or miss : ' + poppingUp);
+    },
     startGame() {
       this.interval = setInterval(() => 
         this.runCycle()
