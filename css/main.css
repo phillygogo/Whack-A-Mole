@@ -1,2 +1,74 @@
-#app{background:url("https://i.imgur.com/2YL0NLM.png") no-repeat left bottom;background-size:cover}.container{display:flex;flex-direction:column;justify-content:space-between;height:100vh;cursor:url("https://i.imgur.com/9CcmlnB.png") 20 20,auto}.container:active{cursor:url("https://i.imgur.com/dDPydXh.png") 20 20,auto}.score-grid{display:flex;-ms-grid-row-align:center;align-self:center;width:20vw;justify-content:space-evenly}.start{background-color:Pink;align-self:flex-end;height:100px;width:200px;margin-top:30px;border-radius:20%;text-align:center}.mole-grid{-ms-grid-row-align:center;align-self:center;margin-bottom:100px;width:75vw;display:flex;justify-content:space-evenly;flex-wrap:wrap}.hole{height:150px;width:150px;margin:0 80px;background-image:url("https://i.imgur.com/bl4VaaU.png")}
+/* .container {
+  display:flex;
+  width: 2000px;
+}
+ */
+#app {
+  background: url("https://i.imgur.com/2YL0NLM.png") no-repeat left bottom;
+  background-size: cover; }
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+  cursor: url("https://i.imgur.com/9CcmlnB.png") 20 20, auto; }
+
+.container:active {
+  cursor: url("https://i.imgur.com/dDPydXh.png") 20 20, auto; }
+
+.scoreBoard {
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+
+.timer {
+  height: 57px;
+  width: 350px;
+  border-radius: 4%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-image: url("https://i.imgur.com/kq7eLWq.png"); }
+
+.score {
+  height: 57px;
+  width: 350px;
+  border-radius: 4%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-image: url("https://i.imgur.com/Hoofmzg.png"); }
+
+.points {
+  margin-left: 52%;
+  margin-top: 15px;
+  color: white; }
+
+.time {
+  margin-left: 52%;
+  margin-top: 15px;
+  color: white; }
+
+.start {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background: url("https://i.imgur.com/lGTvUNU.png");
+  height: 200px;
+  width: 300px;
+  -ms-grid-row-align: center;
+      align-self: center; }
+
+.mole-grid {
+  -ms-grid-row-align: center;
+      align-self: center;
+  margin-bottom: 100px;
+  width: 75vw;
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap; }
+
+.hole {
+  height: 150px;
+  width: 150px;
+  margin: 0 80px;
+  background-image: url("https://i.imgur.com/bl4VaaU.png"); }
 
