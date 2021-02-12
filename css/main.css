@@ -1,8 +1,7 @@
-/* .container {
-  display:flex;
-  width: 2000px;
-}
- */
+@font-face {
+  font-family: "SawarabiGothic-Regular";
+  src: url("/font/SawarabiGothic-Regular.ttf") format("truetype"); }
+
 #app {
   background: url("https://i.imgur.com/2YL0NLM.png") no-repeat left bottom;
   background-size: cover; }
@@ -22,6 +21,12 @@
   align-items: center;
   justify-content: center; }
 
+.countDown {
+  height: 122px;
+  width: 124px;
+  -ms-grid-row-align: center;
+      align-self: center; }
+
 .timer {
   height: 57px;
   width: 350px;
@@ -29,6 +34,13 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-image: url("https://i.imgur.com/kq7eLWq.png"); }
+
+.time {
+  margin-left: 54%;
+  margin-top: 5px;
+  color: white;
+  font-family: 'SawarabiGothic-Regular', Fallback, sans-serif;
+  font-size: 30px; }
 
 .score {
   height: 57px;
@@ -39,14 +51,11 @@
   background-image: url("https://i.imgur.com/Hoofmzg.png"); }
 
 .points {
-  margin-left: 52%;
-  margin-top: 15px;
-  color: white; }
-
-.time {
-  margin-left: 52%;
-  margin-top: 15px;
-  color: white; }
+  margin-left: 54%;
+  margin-top: 5px;
+  color: white;
+  font-family: 'SawarabiGothic-Regular', Fallback, sans-serif;
+  font-size: 30px; }
 
 .start {
   background-size: cover;
