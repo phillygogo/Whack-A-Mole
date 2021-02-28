@@ -5,7 +5,7 @@
 <script>
 export default {
     name: 'Mole',
-    props: ['showtime', 'hit'],
+    props: ['showtime', 'hit', 'speed'],
     data() {
         return {
             stepNum: 1,
@@ -21,6 +21,11 @@ export default {
         hit: function(newVal, oldVal) { // watch it
             if(newVal) {
                 this.whacked();
+                this.stepNum = 4;
+                this.$el.style.backgroundPosition = "0px " + (144 * this.stepNum) + "px";
+                this.stepNum = 1;
+                clearTimeout(this.stepTimeout);
+                this.$emit('im-done');
             } else {
                 this.unwhack();
             }
@@ -29,7 +34,7 @@ export default {
     methods: {
         popup() {
             this.$el.style.backgroundPosition = "0px " + (144 * this.stepNum) + "px";
-            this.stepTimeout = setTimeout(this.popup, 300);
+            this.stepTimeout = setTimeout(this.popup, this.speed);
             
             if(this.stepNum == 4) {
                 clearTimeout(this.stepTimeout);

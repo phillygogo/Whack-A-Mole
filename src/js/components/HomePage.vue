@@ -20,16 +20,33 @@
             </div>
         </div>
     </div>
-
+    <div class="difficulty">
+        <div
+            class="simple"
+            id="simple"
+            @click="toggleDifficulty('simple')"
+        />
+        <div
+            class="normal"
+            id="normal"
+            @click="toggleDifficulty('normal')"
+        />
+        <div
+            class="heavy"
+            id="heavy"
+            @click="toggleDifficulty('heavy')"
+        />
+    </div>
     <div class="countDown" id="countDown"></div>
     <div class="mole-grid">
         <Mole
-        v-for="mole in moles"
-        :key="mole.id"
-        :showtime="mole.showtime"
-        :hit="mole.hit"
-        @im-done="doneFunc(mole.id)"
-        v-on:click.native="hitOrMiss(mole)"
+            v-for="mole in moles"
+            :key="mole.id"
+            :showtime="mole.showtime"
+            :hit="mole.hit"
+            :speed="moleSpeed()"
+            @im-done="doneFunc(mole.id)"
+            v-on:click.native="hitOrMiss(mole)"
         />
 
     </div>
@@ -49,9 +66,15 @@ export default {
         db: null,
         score: 0,
         highscores: null,
-        gameTime: 3,
+        gameTime: 30,
         countDownTimer: 3,
         gameOver: false,
+        difficultyLevel: 'simple',
+        difficulty: {
+            simple: {moleSpeed: 1000, gameSpeed: 1500},
+            normal: { moleSpeed: 400, gameSpeed: 1000},
+            heavy: { moleSpeed: 300, gameSpeed: 1000},
+        },
         luckyNumbers: [],
         gameInterval: null,
         countdownInterval: null,
@@ -60,6 +83,9 @@ export default {
     };
   },
   methods: {
+    moleSpeed() {
+        return this.difficulty[this.difficultyLevel].moleSpeed;
+    },
     hitOrMiss(mole) {
         if(mole.showtime && !mole.hit) {
             mole.hit = true;
@@ -67,83 +93,30 @@ export default {
         }
     },
     countDown() {
-        this.addHighScore();
-        // this.resetGame();
-        // this.countdownInterval = setInterval(() => {
-        //     var startButton = document.getElementById('start');
-        //     var countDownSpot = document.getElementById('countDown');
-        //     startButton.style.backgroundImage = "url("+ "https://i.imgur.com/MMfzy74.png"+")";
+        this.resetGame();
+        this.countdownInterval = setInterval(() => {
+            var startButton = document.getElementById('start');
+            var countDownSpot = document.getElementById('countDown');
+            startButton.style.backgroundImage = "url("+ "https://i.imgur.com/MMfzy74.png"+")";
 
-        //     switch(this.countDownTimer) {
-        //         case 3:
-        //             countDownSpot.style.backgroundImage = "url("+ "https://i.imgur.com/FooSE5H.png"+")";
-        //             break;
-        //         case 2:
-        //             countDownSpot.style.backgroundImage = "url("+ "https://i.imgur.com/P80EYDh.png"+")";
-        //             break;
-        //         case 1:
-        //             countDownSpot.style.backgroundImage = "url("+ "https://i.imgur.com/ydVwsRD.png"+")";
-        //             break;
-        //         case 0:
-        //             countDownSpot.style.backgroundImage = "url("+ "https://i.imgur.com/26Lj92W.png"+")";
-        //             clearInterval(this.countdownInterval);
-        //             this.startGame();
-        //             break;
-        //     };
-        //     this.countDownTimer = this.countDownTimer -1;
-        // }, 1000);
-    },
-    // highscores() {
-    //     fetch("/highscores.txt")
-    //         .then(response => response.arrayBuffer())
-    //         .then(arrayBuffer => {
-
-    //             var blobby = new Blob([arrayBuffer]);
-
-    //             var file = new File([blobby], 'highscores.txt');
-    //             let reader = new FileReader(file);
-
-    //             reader.onload = e => console.log(e.target.result);
-    //             reader.readAsText(file);
-
-    //             console.log(reader);
-    //         })
-    //         .catch(err => console.log(err));
-    // },
-    addHighScore() {
-        //fetch the file from the server
-        fetch("/highscores.txt")
-
-            //convert file to arrayBuffer
-            .then(response => response.arrayBuffer())
-            .then(arrayBuffer => {
-
-                //create blob from arrayBugger
-                var blobby = new Blob([arrayBuffer]);
-
-                //create file from Blob
-                var file = new File([blobby], 'highscores.txt');
-                let reader = new FileReader(file);
-
-                //get the results from the reader
-                reader.onload = result => {
-
-                    // console.log(e.target.result);
-                    //split the file on comma, and save to array.
-                    var fileText = result.target.result.split(',');
-                    
-                    //push my new value to the array
-                    fileText.push('Phillip - 20,');
-                    console.log(fileText);
-
-
-                    //push file back to the filesytem.
-
-                }
-                reader.readAsText(file);
-
-            })
-            .catch(err => console.log(err));
+            switch(this.countDownTimer) {
+                case 3:
+                    countDownSpot.style.backgroundImage = "url("+ "https://i.imgur.com/FooSE5H.png"+")";
+                    break;
+                case 2:
+                    countDownSpot.style.backgroundImage = "url("+ "https://i.imgur.com/P80EYDh.png"+")";
+                    break;
+                case 1:
+                    countDownSpot.style.backgroundImage = "url("+ "https://i.imgur.com/ydVwsRD.png"+")";
+                    break;
+                case 0:
+                    countDownSpot.style.backgroundImage = "url("+ "https://i.imgur.com/26Lj92W.png"+")";
+                    clearInterval(this.countdownInterval);
+                    this.startGame();
+                    break;
+            };
+            this.countDownTimer = this.countDownTimer -1;
+        }, 1000);
     },
     startGame() {
         this.gameInterval = setInterval(() => {
@@ -153,12 +126,24 @@ export default {
                 clearInterval(this.gameInterval);
                 return;
             }
-            this.runCycle()
+            this.runCycle();
+
+            if(this.difficultyLevel == 'normal') {
+                //roll a 1 in 3 chance, for more moles
+                if(this.diceRoll(3) == 2) {
+                    this.runCycle();
+                }
+            }
+
+            if(this.difficultyLevel == 'heavy') {
+                this.runCycle();
+            }
+                
             this.gameTime = this.gameTime -1;
             var countDownSpot = document.getElementById('countDown');
             countDownSpot.style.backgroundImage = "none";
             
-        }, 1000);
+        }, this.difficulty[this.difficultyLevel].gameSpeed);
     },
     runCycle() {
         //reset all this hits on the moles each game cycle
@@ -168,20 +153,45 @@ export default {
         });
 
         //pick the mole to appear
-        var theMole = this.diceRoll();
+        var theMole = this.diceRoll(8);
         this.moles[theMole].showtime = true;
         
         //roll the lucky roll
-        this.luckyNumbers = [this.diceRoll(),this.diceRoll()];
+        this.luckyNumbers = [this.diceRoll(8),this.diceRoll(8)];
 
         //Generate a lucky roll!
         if(this.luckyNumbers.includes(theMole)) {
             this.luckyRoll(theMole);
         }
     },
+    toggleDifficulty(diffLevel) {
+        this.difficultyLevel = diffLevel;
+
+        var difficultyImageSimple = document.getElementById('simple');
+        var difficultyImageNormal = document.getElementById('normal');
+        var difficultyImageHeavy = document.getElementById('heavy');
+
+        if(diffLevel === 'simple'){
+            difficultyImageSimple.style.backgroundImage = "url("+ "https://i.imgur.com/kugMMfs.png"+")";
+            difficultyImageNormal.style.backgroundImage = "url("+ "https://i.imgur.com/wDP7AI7.png"+")";
+            difficultyImageHeavy.style.backgroundImage = "url("+ "https://i.imgur.com/ja1fVub.png"+")";
+        }
+
+        if(diffLevel === 'normal'){
+            difficultyImageSimple.style.backgroundImage = "url("+ "https://i.imgur.com/wOsECh7.png"+")";
+            difficultyImageNormal.style.backgroundImage = "url("+ "https://i.imgur.com/wYbE1Kl.png"+")";
+            difficultyImageHeavy.style.backgroundImage = "url("+ "https://i.imgur.com/ja1fVub.png"+")";
+        }
+
+        if(diffLevel === 'heavy'){
+            difficultyImageSimple.style.backgroundImage = "url("+ "https://i.imgur.com/wOsECh7.png"+")";
+            difficultyImageNormal.style.backgroundImage = "url("+ "https://i.imgur.com/wDP7AI7.png"+")";
+            difficultyImageHeavy.style.backgroundImage = "url("+ "https://i.imgur.com/HmDJeBR.png"+")";
+        }
+    },
     resetGame() {
         this.countDownTimer = 3;
-        this.gameTime = 3;
+        this.gameTime = 30;
         this.score = 0;
         this.gameOver = false;
     },
@@ -190,14 +200,14 @@ export default {
     },
     luckyRoll(theMole) {
         //pick the second mole to appear
-        var doubleMole = this.diceRoll();
+        var doubleMole = this.diceRoll(8);
 
         if (doubleMole !== theMole) {
             this.moles[doubleMole].showtime = true;
         }
     },
-    diceRoll() {
-        return Math.floor(Math.random() * Math.floor(8));
+    diceRoll(num) {
+        return Math.floor(Math.random() * Math.floor(num));
     }
   }
 };
