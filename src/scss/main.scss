@@ -3,7 +3,11 @@
   src: url("/font/SawarabiGothic-Regular.ttf") format("truetype");
 }
 
- #app {
+body {
+  margin: 0;
+}
+
+#app {
   background: url("https://i.imgur.com/2YL0NLM.png") no-repeat left bottom;
   background-size: cover;
 }
@@ -124,6 +128,7 @@
   align-items: flex-end;
   margin-right:3rem;
   z-index: 9999;
+  margin-top: -8rem;
 }
 
 .simple {
