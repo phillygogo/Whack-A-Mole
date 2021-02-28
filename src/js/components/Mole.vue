@@ -5,7 +5,7 @@
 <script>
 export default {
     name: 'Mole',
-    props: ['showtime'],
+    props: ['showtime', 'hit'],
     data() {
         return {
             stepNum: 1,
@@ -16,6 +16,13 @@ export default {
       	showtime: function(newVal, oldVal) { // watch it
             if(newVal) {
                 this.popup();
+            }
+        },
+        hit: function(newVal, oldVal) { // watch it
+            if(newVal) {
+                this.whacked();
+            } else {
+                this.unwhack();
             }
         }
     },
@@ -30,6 +37,12 @@ export default {
             }
             this.stepNum = (this.stepNum === 4) ? this.stepNum = 1 : this.stepNum + 1;
         },
+        whacked() {
+            this.$el.style.backgroundImage = "url("+ "https://i.imgur.com/xb6Dvwe.png"+")";
+        },
+        unwhack(){
+            this.$el.style.backgroundImage = "url("+ "https://i.imgur.com/bl4VaaU.png"+")";
+        }
     }
 };
 </script>
